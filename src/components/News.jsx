@@ -65,7 +65,8 @@ export class News extends Component {
         console.log(parsedata) ;
         this.setState({ 
           articles: this.state.articles.concat(parsedata.articles) , 
-          totalResults: parsedata.totalResults 
+          totalResults: parsedata.totalResults ,
+          loading : false
           });
       }
     
@@ -74,7 +75,7 @@ export class News extends Component {
             <>
             <h2 className='text-center my-3' style={{marginTop:'80px'}}>NewsMonkey - Top {this.capitalize(this.props.category)} Headlines</h2>
             {this.state.loading && <Spinner /> }
-            <InfiniteScroll dataLength={this.state.articles.length} next={this.fetchData} hasMore={this.state.articles.length < this.state.totalResults} loader={<Spinner/>} >
+            <InfiniteScroll dataLength={this.state.articles.length} next={this.fetchData} hasMore={this.state.articles.length < this.state.totalResults} loader={(this.state.articles.length > this.state.totalResults) ? <Spinner/> : null} >
             <div className='container' style={{maxWidth:'100%'}}>
             <div className='row'>
               {this.state.articles.map((element) => {
